@@ -13,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: (req: Request) => {
         if (!req.cookies || !req.cookies['access_token']) {
-          throw new UnauthorizedException('Access token not found in cookies');
+          throw new UnauthorizedException('Access token not found in cookies ');
         }
         return req.cookies['access_token'];
       },
@@ -23,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: AuthJwtPayload) {
+    console.log(payload);
     return payload; 
   }
 }

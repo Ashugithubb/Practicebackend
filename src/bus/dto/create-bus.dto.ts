@@ -3,6 +3,9 @@ import { Category } from "../enums/bus.enum";
 
 export class CreateBusDto {
     @IsString()
+    regno:string
+       
+    @IsString()
     model:string
 
     @IsString()
@@ -10,6 +13,7 @@ export class CreateBusDto {
 
     @IsInt()
     total_seats:number
+
 
     @IsEnum(Category)
     category:Category   

@@ -13,6 +13,7 @@ export class AuthController {
     login(@Body() { email, password}, @Res({ passthrough: true }) res: Response,@Request() req) {
         const user = req.user;
         const payload = { id: user.id, email: user.email,role:user.role};
+        
         return this.authService.login(payload ,res);
     }
 

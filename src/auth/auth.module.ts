@@ -9,6 +9,8 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { HasingModule } from 'src/hasing/hasing.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from 'src/user/user.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './guard/jwt.auth';
 
 
 
@@ -23,6 +25,11 @@ import { UserModule } from 'src/user/user.module';
   }),
   ],
   controllers: [AuthController],
-  providers: [AuthService,LocalStrategy,JwtStrategy]
+  providers: [AuthService,LocalStrategy,JwtStrategy,
+  //   {
+  //   provide:APP_GUARD,
+  //   useClass:JwtAuthGuard
+  // }
+]
 })
 export class AuthModule { }

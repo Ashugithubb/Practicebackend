@@ -1,19 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBusDto } from './dto/create-bus.dto';
 import { UpdateBusDto } from './dto/update-bus.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Bus } from './entities/bus.entity';
+import { Repository } from 'typeorm';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class BusService {
-  create(createBusDto: CreateBusDto) {
-    return 'This action adds a new bus';
+
+  constructor(@InjectRepository(Bus) private readonly busRepo: Repository<Bus>,
+    private readonly userService: UserService) { }
+
+  async create(createBusDto: CreateBusDto, email: string) {
+    const model = createBusDto.model
+
+    const existing = await this.busRepo.findOneBy({ model })
+    if (existing) return { "msg": "This Bus Already exists" };
+
+    const user = await this.userService.findOneByemail(email);
+    if(!user) return {"msg": "User is not found"}
+    
+    const newBus = this.busRepo.create({
+      ...createBusDto,
+      owner: user
+    })
+
+    await this.busRepo.save(newBus);
+    return { "msg": "added Bus" }
   }
+
+
+
 
   findAll() {
     return `This action returns all bus`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bus`;
+  findOne(busId: number) {
+    return this.busRepo.findOneBy({busId});
   }
 
   update(id: number, updateBusDto: UpdateBusDto) {

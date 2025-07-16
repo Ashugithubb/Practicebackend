@@ -11,6 +11,11 @@ export class UserService {
   constructor(@InjectRepository(User) private readonly userRepo:Repository<User>,
                private readonly hasingService: HasingService ){}
   async create(createUserDto: CreateUserDto) {
+    const email = createUserDto.email;
+    const existing = await this.userRepo.findOneBy({email})
+    if(existing){
+      return{"msg":"User Already Exists"}
+    }
     createUserDto.password = await this.hasingService.hashPassword(createUserDto.password);
      await this.userRepo.save(createUserDto);
      return "User Registred Successfully";
@@ -19,19 +24,23 @@ export class UserService {
   async findOneByemail(email:string) {
     return await this.userRepo.findOne({
       where:{email},
-      select:['password']
+      select:['email','id','role','password']
     });
   }
 
-  
+  async findOneById(id:number){
+      return await this.findOneById(id)
+  }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    return await this.userRepo.find();
   }
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return await this.userRepo.update(id,updateUserDto);
   }
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  
+  async remove(id: number) {
+    return await this.userRepo.delete(id);
   }
 }

@@ -17,6 +17,9 @@ export class Ride {
     departure_time:string
 
     @Column()
+    Stop_duration:string
+    
+    @Column()
     ride_Date:string
 
     @Column()

@@ -12,8 +12,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
+  
   imports: [ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRootAsync(typeOrmConfig),AuthModule, UserModule, BusModule, RideModule, TicketModule, HasingModule],
   controllers: [AppController],
   providers: [AppService],
+  
 })
 export class AppModule {}

@@ -39,7 +39,7 @@ export class User {
     @CreateDateColumn()
     createdAt: Date
 
-    @OneToMany(()=>Bus,(b)=>b.user)
+    @OneToMany(()=>Bus,(b)=>b.owner,{ onDelete: 'CASCADE' })
     bus:Bus[]
 
 

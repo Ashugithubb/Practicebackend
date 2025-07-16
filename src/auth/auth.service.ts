@@ -23,17 +23,19 @@ export class AuthService {
         if (!user) throw new UnauthorizedException("User email not found");
         const matched = await this.hasingService.compare(password, user.password);
         if (!matched) throw new UnauthorizedException("Invalid password");
-        return { email: user.email,id:user.id,role:user.role}
+        return { email: user.email,id:user.id,role:user.role};
     }
 
 
     async login(payload:AuthJwtPayload, res: Response) {
-        const token = this.jwtService.sign(payload)
+         
+        const token = await this.jwtService.sign(payload)
+        // console.log(this.jwtService.decode(token));
         res.cookie('access_token', token, {
             httpOnly: true,
             secure: true,
             sameSite: 'strict',
-            maxAge: 2*60 * 1000,
+            maxAge: 2*60 *10000,
         });
         return {
             "msg": "Loged In Successfully"

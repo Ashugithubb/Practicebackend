@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Category } from "../enums/bus.enum";
 import { User } from "src/user/entities/user.entity";
 import { Ride } from "src/ride/entities/ride.entity";
@@ -6,9 +6,9 @@ import { Ride } from "src/ride/entities/ride.entity";
 @Entity('bus')
 export class Bus {
     @PrimaryGeneratedColumn()
-    regno:number
+    busId:number
 
-    @Column()
+    @Column({unique:true})
     model:string
 
     @Column()
@@ -20,13 +20,16 @@ export class Bus {
     @Column({type:'enum',enum:Category,default:Category.NON_AC} )
     category:Category
 
-    @Column()
+    @Column({default:"bus1427",unique:true})
+    regno:string
+
+    @CreateDateColumn()
     registeredAt:Date
 
     @ManyToOne(()=>User,(u)=>u.bus)
-    user:User
+    owner:User
 
-    @OneToMany(()=>Ride,(r)=>r.bus)
+    @OneToMany(()=>Ride,(r)=>r.bus,{ onDelete: 'CASCADE' })
     ride:Ride[]
 
 
