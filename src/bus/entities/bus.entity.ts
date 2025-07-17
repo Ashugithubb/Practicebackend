@@ -20,7 +20,7 @@ export class Bus {
     @Column({type:'enum',enum:Category,default:Category.NON_AC} )
     category:Category
 
-    @Column({default:"bus1427",unique:true})
+    @Column({unique:true})
     regno:string
 
     @CreateDateColumn()

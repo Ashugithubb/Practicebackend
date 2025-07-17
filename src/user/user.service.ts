@@ -28,8 +28,10 @@ export class UserService {
     });
   }
 
-  async findOneById(id:number){
-      return await this.findOneById(id)
+  
+
+  async findOne(id:number){
+      return await this.userRepo.findOneBy({id})
   }
 
   async findAll() {

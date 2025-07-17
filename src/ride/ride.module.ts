@@ -9,5 +9,6 @@ import { BusModule } from 'src/bus/bus.module';
   imports:[TypeOrmModule.forFeature([Ride]),BusModule],
   controllers: [RideController],
   providers: [RideService],
+  exports:[RideService]
 })
 export class RideModule {}

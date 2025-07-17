@@ -2,6 +2,7 @@ import { MinLength } from "class-validator";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Gender, Role } from "../enums/all.enums";
 import { Bus } from "src/bus/entities/bus.entity";
+import { Ticket } from "src/ticket/entities/ticket.entity";
 
 @Entity('user')
 export class User {
@@ -41,6 +42,9 @@ export class User {
 
     @OneToMany(()=>Bus,(b)=>b.owner,{ onDelete: 'CASCADE' })
     bus:Bus[]
+
+    @OneToMany(()=>Ticket,(t)=>t.passenger)
+    tickets:Ticket[]
 
 
 }

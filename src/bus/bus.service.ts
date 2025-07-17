@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Bus } from './entities/bus.entity';
 import { Repository } from 'typeorm';
 import { UserService } from 'src/user/user.service';
+import { RideSearchDto } from 'src/ride/dto/ride.search.dto';
 
 @Injectable()
 export class BusService {
@@ -30,21 +31,22 @@ export class BusService {
     return { "msg": "added Bus" }
   }
 
+  async busDetails(busId: number) {
+    return await this.busRepo.findOneBy({busId});
+  }
+
+
+  
+
 
 
 
   findAll() {
     return `This action returns all bus`;
   }
-
-  findOne(busId: number) {
-    return this.busRepo.findOneBy({busId});
-  }
-
   update(id: number, updateBusDto: UpdateBusDto) {
     return `This action updates a #${id} bus`;
   }
-
   remove(id: number) {
     return `This action removes a #${id} bus`;
   }

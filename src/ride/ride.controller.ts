@@ -3,6 +3,7 @@ import { RideService } from './ride.service';
 import { CreateRideDto } from './dto/create-ride.dto';
 import { UpdateRideDto } from './dto/update-ride.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt.auth';
+import { RideSearchDto } from './dto/ride.search.dto';
 
 @Controller('ride')
 export class RideController {
@@ -15,17 +16,28 @@ export class RideController {
 
     return this.rideService.createRide(createRideDto, +busId);
   }
-  @Get()
-  findAllRideFromSourceToDestination(
-    @Query('src') src: string,
-    @Query('des') des: string
-  ) {
-    return this.rideService.findAllRideFromSourceToDestination(src, des);
+  @Get('rides')
+  findAllRideFromSourceToDestination(@Query() query: RideSearchDto){
+      return this.rideService.findAllRideFromSourceToDestination(query);
   }
+
+  @Get('buses')
+  findAllBusesFromSourceToDestination(@Query() query:RideSearchDto){
+    return this.rideService.findAllBusesFromSourceToDestination(query)
+  }
+
+  
+  @Get('busHistory/:id')
+  viewBusRideHistory(@Param('id')id:string){
+    console.log(id);
+    return this.rideService.viewBusRideHistory(+id);
+  }
+
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.rideService.findOne(+id);
+    return this.rideService.findOneByRideId(+id);
   }
 
   @Patch(':id')

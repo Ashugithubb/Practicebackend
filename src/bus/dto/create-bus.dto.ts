@@ -9,7 +9,7 @@ export class CreateBusDto {
     model:string
 
     @IsString()
-    colour:string
+   color:string
 
     @IsInt()
     total_seats:number

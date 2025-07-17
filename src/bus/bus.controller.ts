@@ -23,8 +23,8 @@ export class BusController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.busService.findOne(+id);
+  busDetails(@Param('id') id: string) {
+    return this.busService.busDetails(+id);
   }
 
   @Patch(':id')

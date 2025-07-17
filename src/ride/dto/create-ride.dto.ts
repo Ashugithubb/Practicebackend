@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsInt, IsString } from "class-validator";
 
 export class CreateRideDto {
     @IsString()
@@ -11,12 +11,14 @@ export class CreateRideDto {
     departure_time:string
 
     @IsString()
+    Stop_duration:string
+    
+    @IsString()
     ride_Date:string
 
+    @IsInt()
+    fare:number
+    
     @IsString()
     current_location:string
-
-    @IsString()
-    publisedAt:string
-
 }
